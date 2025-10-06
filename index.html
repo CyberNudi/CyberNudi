@@ -1,84 +1,70 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>單張可滑動圖片</title>
-  <style>
-    html, body {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        overflow-y: auto; /* 只有 body 滾動 */
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>固定滿版背景 + 文字框範例</title>
+<style>
+  /* --- 全域 --- */
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: "Noto Sans TC", sans-serif;
+    background-color: #000; /* fallback 背景色 */
+  }
 
-    .image-container {
-        position: sticky;
-        top: 0; /* 圖片停駐在視窗頂部 */
-        width: 100%;
-        z-index: 1; /* 確保圖片在文字下方 */
-    }
+  /* --- 固定滿版背景（替換下面的 URL） --- */
+  body {
+    background-image: url("https://github.com/CyberNudi/AI_Gen/blob/fff87441740e737ff7c76fd91c0725e6cf8f815f/%CE%B1.jpg?raw=true"); /* <-- 換成你的圖片 URL */
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;         /* 滿版覆蓋，保留比例 */
+    background-attachment: fixed;   /* 固定在視窗，不隨內容捲動 */
+  }
 
-    .image-container img {
-        width: 100%;
-        height: auto;
-        display: block;
-    }
+  /* --- 主容器（讓文字區塊垂直置中） --- */
+  .wrap {
+    min-height: 100vh;          /* 滿高視窗 */
+    display: flex;
+    align-items: center;        /* 垂直置中 */
+    justify-content: center;    /* 水平置中 */
+    box-sizing: border-box;
+    padding: 40px 20px;         /* 上下 40px，左右 20px（可調） */
+  }
 
-    .text-box {
-        position: relative;
-        margin: 0px 40px; /* 左右間距 40px，頂部和底部無間距 */
-        padding: 20px;
-        background: rgba(0, 0, 0, 0.45);
-        border-radius: 12px;
-        color: #fff;
-        height: auto; /* 高度自動隨內容 */
-        white-space: normal;
-        word-wrap: break-word;
-        z-index: 2; /* 確保文字框在圖片上方 */
-    }
-  </style>
+  /* --- 文字框 --- */
+  .card {
+    width: 100%;
+    max-width: 900px;           /* 最大寬度，可改 */
+    background: rgba(0, 0, 0, 0.5); /* 半透明底 */
+    backdrop-filter: blur(1px); /* 模糊背景（支援瀏覽器） */
+    color: #fff;
+    padding: 20px;              /* 內距 */
+    border-radius: 12px;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.5);
+    line-height: 1.7;
+    box-sizing: border-box;
+  }
+
+  /* --- 響應調整（小螢幕） --- */
+  @media (max-width: 480px) {
+    .wrap { padding: 24px 12px; }
+    .card { padding: 16px; border-radius: 10px; }
+  }
+</style>
 </head>
 <body>
-  <div class="image-container">
-    <img src="https://github.com/CyberNudi/AI_Gen/blob/main/%CE%B2.png?raw=true" alt="可滑動圖片">
+
+  <div class="wrap">
+    <article class="card" role="article" aria-label="主要內容">
+      <h1 style="margin-top:0">Demon Slayer</h1>
+      <p>Never gonna give you up</p>
+      <p>Never wanna let you down</p>
+      <p>Never gonna run around</p>
+      <p>Dessert you</p>
+    </article>
   </div>
-  <div class="text-box">
-      這裡放你的文字這裡放你的文字
-      <br><br><br><br><br><br><br><br><br><br><br><br>
-      <br><br><br><br><br><br><br><br><br><br><br><br>
-      <br><br><br><br><br><br><br><br><br><br><br><br>
-      <br><br><br><br><br><br><br><br><br><br><br><br>
-      這裡放你的文字
-      這裡放你的文字
-      這裡放你的文字
-      這裡放你的文字
-      這裡放你的文字
-      這裡放你的文字
-      這裡放你的文字
-      這裡放你的文字
-  </div>
-  <script>
-    function adjustTextBoxPosition() {
-      const img = document.querySelector('.image-container img');
-      const textBox = document.querySelector('.text-box');
-      textBox.style.marginTop = `-${img.offsetHeight}px`;
-    }
 
-    // 當圖片載入完成時調整文字框位置
-    const img = document.querySelector('.image-container img');
-    img.onload = adjustTextBoxPosition;
-
-    // 當視窗大小改變時重新調整文字框位置
-    window.addEventListener('resize', adjustTextBoxPosition);
-
-    // 初始調整（如果圖片已緩存，可能不會觸發 onload）
-    adjustTextBoxPosition();
-  </script>
 </body>
-
 </html>
-
-
-
-
