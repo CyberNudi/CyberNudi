@@ -3,17 +3,22 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>固定滿版背景 + 文字框範例</title>
+<title>CyberNudi</title>
 <style>
   /* --- 全域 --- */
+  @font-face {
+	font-family: 'Hylia Serif';
+	src: url('https://github.com/CyberNudi/CyberNudi/raw/refs/heads/main/resource/HyliaSerifBeta-Regular.otf') format('opentype');
+	font-weight: normal;
+	font-style: normal;
+  }
   html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-    font-family: "Noto Sans TC", sans-serif;
+    font-family: 'Hylia Serif', serif;
     background-color: #000; /* fallback 背景色 */
   }
-
   /* --- 固定滿版背景（替換下面的 URL） --- */
   body {
     background-image: url("https://github.com/CyberNudi/AI_Gen/blob/fff87441740e737ff7c76fd91c0725e6cf8f815f/%CE%B1.jpg?raw=true"); /* <-- 換成你的圖片 URL */
