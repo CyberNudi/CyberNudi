@@ -7,8 +7,7 @@
 <style>
   /* --- 全域 --- */
   @font-face {
-	font-family: 'Hylia Serif';
-	src: url('https://cybernudi.github.io/CyberNudi/resource/HyliaSerifBeta-Regular.otf') format('opentype');
+	font-family: 'Consolas';
 	font-weight: normal;
 	font-style: normal;
   }
@@ -16,8 +15,8 @@
     height: 100%;
     margin: 0;
     padding: 0;
-    font-family: 'Hylia Serif', serif;
-    background-color: #000; /* fallback 背景色 */
+    font-family: 'Consolas';
+	background: rgba(0, 0, 0, 0);
   }
   /* --- 固定滿版背景（替換下面的 URL） --- */
   body {
@@ -42,16 +41,25 @@
   .card {
     width: 100%;
     max-width: 900px;           /* 最大寬度，可改 */
-    background: rgba(0, 0, 0, 0.5); /* 半透明底 */
-    backdrop-filter: blur(1px); /* 模糊背景（支援瀏覽器） */
+    background: rgba(0, 0, 0, 0.6); /* 半透明底 */
     color: #fff;
     padding: 20px;              /* 內距 */
     border-radius: 12px;
     box-shadow: 0 6px 24px rgba(0,0,0,0.5);
-    line-height: 1.7;
+    line-height: 10px;
     box-sizing: border-box;
+	justify-content: center;
   }
 
+  .card h1 {
+    font-weight: normal;
+    font-size: 24px;
+    margin-top: 0;
+  }
+
+  .card p {
+    font-size: 16px;
+  }
   /* --- 響應調整（小螢幕） --- */
   @media (max-width: 480px) {
     .wrap { padding: 24px 12px; }
@@ -63,14 +71,23 @@
 
   <div class="wrap">
     <article class="card" role="article" aria-label="主要內容">
-      <h1 style="margin-top:0">Demon Slayer</h1>
+      <h1 style="margin-top:0">RickRoll</h1>
+	  <hr>
       <p>Never gonna give you up</p>
       <p>Never wanna let you down</p>
       <p>Never gonna run around</p>
+	  <br><br><br><br><br><br><br><br><br><br><br><br><br>
+	  <br><br><br><br><br><br><br><br><br><br><br><br><br>
+	  <br><br><br><br><br><br><br><br><br><br><br><br><br>
+	  <br><br><br><br><br><br><br><br><br><br><br><br><br>
+	  <br><br><br><br><br><br><br><br><br><br><br><br><br>
+	  <br><br><br><br><br><br><br><br><br><br><br><br><br>
+	  <br><br><br><br><br><br><br><br><br><br><br><br><br>
+	  <br><br><br><br><br><br><br><br><br><br><br><br><br>
+	  <br><br><br><br><br><br><br><br><br><br><br><br><br>
       <p>Dessert you</p>
     </article>
   </div>
 
 </body>
 </html>
-
