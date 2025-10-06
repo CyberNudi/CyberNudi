@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>單張可滑動圖片</title>
+  <style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow-y: auto; /* 只有 body 滾動 */
+    }
+
+    .image-container {
+        position: sticky;
+        top: 0; /* 圖片停駐在視窗頂部 */
+        width: 100%;
+        z-index: 1; /* 確保圖片在文字下方 */
+    }
+
+    .image-container img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .text-box {
+        position: relative;
+        margin: 0px 40px; /* 左右間距 40px，頂部和底部無間距 */
+        padding: 20px;
+        background: rgba(0, 0, 0, 0.45);
+        border-radius: 12px;
+        color: #fff;
+        height: auto; /* 高度自動隨內容 */
+        white-space: normal;
+        word-wrap: break-word;
+        z-index: 2; /* 確保文字框在圖片上方 */
+    }
+  </style>
+</head>
+<body>
+  <div class="image-container">
+    <img src="https://github.com/CyberNudi/AI_Gen/blob/main/%CE%B1.jpg?raw=true" alt="可滑動圖片">
+  </div>
+  <div class="text-box">
+      這裡放你的文字這裡放你的文字
+      <br><br><br><br><br><br><br><br><br><br><br><br>
+      <br><br><br><br><br><br><br><br><br><br><br><br>
+      <br><br><br><br><br><br><br><br><br><br><br><br>
+      <br><br><br><br><br><br><br><br><br><br><br><br>
+      這裡放你的文字
+      這裡放你的文字
+      這裡放你的文字
+      這裡放你的文字
+      這裡放你的文字
+      這裡放你的文字
+      這裡放你的文字
+      這裡放你的文字
+  </div>
+  <script>
+    function adjustTextBoxPosition() {
+      const img = document.querySelector('.image-container img');
+      const textBox = document.querySelector('.text-box');
+      textBox.style.marginTop = `-${img.offsetHeight}px`;
+    }
+
+    // 當圖片載入完成時調整文字框位置
+    const img = document.querySelector('.image-container img');
+    img.onload = adjustTextBoxPosition;
+
+    // 當視窗大小改變時重新調整文字框位置
+    window.addEventListener('resize', adjustTextBoxPosition);
+
+    // 初始調整（如果圖片已緩存，可能不會觸發 onload）
+    adjustTextBoxPosition();
+  </script>
+</body>
+</html>
