@@ -5,89 +5,153 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>CyberNudi</title>
 <style>
-  /* --- 全域 --- */
-  @font-face {
-	font-family: 'Consolas';
-	font-weight: normal;
-	font-style: normal;
-  }
+  /* --- 全域樣式 --- */
   html, body {
     height: 100%;
     margin: 0;
-    padding: 0;
-    font-family: 'Consolas';
-	background: rgba(0, 0, 0, 0);
-  }
-  /* --- 固定滿版背景（替換下面的 URL） --- */
-  body {
-    background-image: url("https://github.com/CyberNudi/AI_Gen/blob/fff87441740e737ff7c76fd91c0725e6cf8f815f/%CE%B1.jpg?raw=true"); /* <-- 換成你的圖片 URL */
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;         /* 滿版覆蓋，保留比例 */
-    background-attachment: fixed;   /* 固定在視窗，不隨內容捲動 */
-  }
-
-  /* --- 主容器（讓文字區塊垂直置中） --- */
-  .wrap {
-    min-height: 100vh;          /* 滿高視窗 */
-    display: flex;
-    align-items: center;        /* 垂直置中 */
-    justify-content: center;    /* 水平置中 */
-    box-sizing: border-box;
-    padding: 40px 20px;         /* 上下 40px，左右 20px（可調） */
-  }
-
-  /* --- 文字框 --- */
-  .card {
-    width: 100%;
-    max-width: 900px;           /* 最大寬度，可改 */
-    background: rgba(0, 0, 0, 0.6); /* 半透明底 */
+    font-family: Consolas, monospace;
+    background: url("https://github.com/CyberNudi/AI_Gen/blob/fff87441740e737ff7c76fd91c0725e6cf8f815f/%CE%B1.jpg?raw=true")
+      center/cover fixed no-repeat;
     color: #fff;
-    padding: 20px;              /* 內距 */
+  }
+
+  /* --- 中央容器 --- */
+  .wrap {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    box-sizing: border-box;
+  }
+
+  /* --- 卡片區 --- */
+  .card {
+    max-width: 1000px;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 24px;
     border-radius: 12px;
     box-shadow: 0 6px 24px rgba(0,0,0,0.5);
-    line-height: 10px;
     box-sizing: border-box;
-	justify-content: center;
   }
 
   .card h1 {
-    font-weight: normal;
     font-size: 24px;
     margin-top: 0;
+    text-align: center;
   }
 
-  .card p {
-    font-size: 16px;
+  hr {
+    border: none;
+    border-top: 1px solid rgba(255,255,255,0.4);
+    margin: 16px 0;
   }
-  /* --- 響應調整（小螢幕） --- */
-  @media (max-width: 480px) {
-    .wrap { padding: 24px 12px; }
-    .card { padding: 16px; border-radius: 10px; }
+
+  /* --- 主要內容分欄 --- */
+  .columns {
+    display: flex;
+    gap: 40px;               /* 欄間距 */
+	opacity: 1;
+	font-size: 16px;
+  }
+
+  .left, .right {
+    flex: 1;                 /* 各佔一半寬 */
+    text-align: justify;
+  }
+
+  .left p, .right p {
+    line-height: 1.6;
+  }
+  
+  .right {
+	text-align: right;   /* 右欄文字靠右 */
+	align-self: flex-start; /* 讓右欄頂對齊 */
+  }
+
+  /* --- 底部區域 --- */
+  .footer {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+    opacity: 0.8;
+  }
+
+  /* --- 響應式 --- */
+  @media (max-width: 768px) {
+    .columns {
+      flex-direction: column;  /* 手機改為上下排列 */
+    }
   }
 </style>
 </head>
 <body>
 
-  <div class="wrap">
-    <article class="card" role="article" aria-label="主要內容">
-      <h1 style="margin-top:0">RickRoll</h1>
+<div class="wrap">
+  <article class="card">
+    <h1>α - β</h1>
+    <hr>
+    <div class="columns">
+      <div class="left">
+        <p>予凜冽的蒼白之龍阿<br>
+		   於皚皚的凍土之上<br>
+		   為何你長眠於此，銳牙與利爪</p>
+        <p>還凜冽的蒼白之龍阿<br>
+		   於暴風與白雪之中<br>
+		   追尋著，那飄渺般的存在</p>
+      </div>
+      <div class="right">
+        <p>予龍饗的蒼虹少女阿<br>
+		   於皚皚的凍土之上<br>
+		   為何妳堅定不移，血鐮與晶蝕</p>
+		<p>還龍饗的蒼虹少女阿<br>
+		   於暴風與白雪之中<br>
+		   守護著，那癡迷般的存在</p>
+      </div>
+    </div>
+    <div class="footer">
+      <p>"那唯一的存在，終將消逝於荒謬之中"</p>
+	<div class="columns">
+      <div class="left">
+        <p>予凜冽的蒼白之龍阿<br>
+		   在奧幻星空之下<br>
+		   銳牙與鱗片，將被血鐮撕裂<br>
+		   成星空的碎片，同生命消逝</p>
+      </div>
+      <div class="right">
+        <p>予龍饗的蒼虹少女阿<br>
+		   在奧幻星空之下<br>
+		   頭顱與血鐮，將被爪牙粉碎<br>
+		   成雪中的冰隙，同生命消逝</p>
+      </div>
+    </div>
+	<div class="footer">
+      <p>"血跟鱗的混沌序幕，荒謬中的近似解"</p>
+	  <p>血鐮擊碎了冰鱗，斬斷了奧藍偉傲之翼<br>
+		 劃過顫慄的眼神，血液噴湧而出—<br>
+		 銳爪粉碎了裙襬，摧斷了鮮紅血色之鐮<br>
+		 劃過孤獨的胸膛，血液噴湧而出—</p>
+	</div>
+	<div class="columns">
+      <div class="left">
+        <p>還凜冽的蒼白之龍...<br>
+		   畢生所追求的<br>
+		   在生命的終點，將親眼所見</p>
+      </div>
+      <div class="right">
+        <p>還龍饗的蒼虹少女...<br>
+		   作為認可的回報<br>
+		   在生命的轉折點，繼續守護</p>
+      </div>
+    </div>
+	<div class="footer">
+      <p>"那永恆的剎那，虛幻的城塞"</p>
 	  <hr>
-      <p>Never gonna give you up</p>
-      <p>Never wanna let you down</p>
-      <p>Never gonna run around</p>
-	  <br><br><br><br><br><br><br><br><br><br><br><br><br>
-	  <br><br><br><br><br><br><br><br><br><br><br><br><br>
-	  <br><br><br><br><br><br><br><br><br><br><br><br><br>
-	  <br><br><br><br><br><br><br><br><br><br><br><br><br>
-	  <br><br><br><br><br><br><br><br><br><br><br><br><br>
-	  <br><br><br><br><br><br><br><br><br><br><br><br><br>
-	  <br><br><br><br><br><br><br><br><br><br><br><br><br>
-	  <br><br><br><br><br><br><br><br><br><br><br><br><br>
-	  <br><br><br><br><br><br><br><br><br><br><br><br><br>
-      <p>Dessert you</p>
-    </article>
-  </div>
+	  <p>~~~the end~~~</p>
+	</div>
+  </article>
+</div>
 
 </body>
 </html>
