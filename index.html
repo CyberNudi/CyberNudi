@@ -10,7 +10,6 @@
     height: 100%;
     margin: 0;
     font-family: Consolas, monospace;
-    background: url("https://github.com/CyberNudi/AI_Gen/blob/fff87441740e737ff7c76fd91c0725e6cf8f815f/%CE%B1.jpg?raw=true")
       center/cover fixed no-repeat;
     color: #fff;
   }
@@ -51,24 +50,24 @@
   /* --- 主要內容分欄 --- */
   .columns {
     display: flex;
-    gap: 40px;               /* 欄間距 */
-	opacity: 1;
-	font-size: 16px;
+    gap: 40px;
+    opacity: 1;
+    font-size: 16px;
   }
 
   .left, .right {
-    flex: 1;                 /* 各佔一半寬 */
+    flex: 1;
     text-align: justify;
   }
 
   .left p, .right p {
     line-height: 1.6;
-	opacity: 1;
+    opacity: 1;
   }
-  
+
   .right {
-	text-align: right;   /* 右欄文字靠右 */
-	align-self: flex-start; /* 讓右欄頂對齊 */
+    text-align: right;
+    align-self: flex-start;
   }
 
   /* --- 底部區域 --- */
@@ -79,10 +78,25 @@
     opacity: 0.8;
   }
 
+  /* --- 輸入框顯示區 --- */
+  .code-box {
+    font-size: 20px;
+    letter-spacing: 3px;
+    margin-top: 12px;
+    user-select: none;
+    color: #fff;
+  }
+
+  input#codeInput {
+    opacity: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+
   /* --- 響應式 --- */
   @media (max-width: 768px) {
     .columns {
-      flex-direction: column;  /* 手機改為上下排列 */
+      flex-direction: column;
     }
   }
 </style>
@@ -189,10 +203,92 @@
 		 撇除掉看似真實的無為敘述<br>
 		 那海市蜃樓，倒影般的事實<br>
 		 才會無所遁形罷""—作者0w0</p>
+
+	  <!-- 動態輸入區 -->
+      <div class="code-box" id="display">&lt;-----&gt;</div>
+      <input id="codeInput" type="text" maxlength="5">
 	</div>
   </article>
 </div>
 
+<script>
+  const input = document.getElementById("codeInput");
+  const display = document.getElementById("display");
+  let bgUrl = "https://github.com/CyberNudi/AI_Gen/blob/fff87441740e737ff7c76fd91c0725e6cf8f815f/%CE%B1.jpg?raw=true";
+  document.body.style.background = `url("${bgUrl}") center/cover fixed no-repeat`;
+  let mask = ['-','-','-','-','-'];
+
+  document.body.addEventListener("click", () => {
+    input.focus(); // 讓輸入框聚焦
+    display.style.color = "#00c4cc"; // 改顯示文字顏色
+  });
+
+  input.addEventListener("input", () => {
+    const val = input.value.replace(/[^a-zA-Z0-9]/g, '');
+    mask = ['-','-','-','-','-'];
+    for(let i=0; i<val.length; i++){
+      mask[i] = '•';
+    }
+    display.innerHTML = "&lt;" + mask.join('') + "&gt;";
+
+    if (val.trim() === "13102") {
+      document.body.style.background = 'url("https://github.com/CyberNudi/AI_Gen/blob/main/%CE%BE.jpg?raw=true") center/cover fixed no-repeat';
+      document.querySelector(".card").innerHTML = `
+        <h1>ξ</h1>
+        <hr>
+        <div class="columns">
+          <div class="left">
+            <p>余初次感受到<br>
+			   那親密的蒼白身影<br>
+			   儘管鮮血肆意流淌</p>
+          </div>
+          <div class="right">
+            <p>吾初次感受到<br>
+			   那溫熱的晰虹身軀<br>
+			   儘管雙目已然失明</p>
+          </div>
+        </div>
+        <div class="footer">
+          <p>"永恆的鬥爭<br>
+			 屍骸堆壘，血液漫漶"</p>
+        </div>
+		<div class="columns">
+          <div class="left">
+            <p>予凜冽的蒼白之龍阿<br>
+			   於皚皚的凍土之上<br>
+			   為何余堅定不移，血鐮與晶蝕</p>
+			<p>還龍饗的蒼虹少女阿<br>
+			   於暴風與白雪之中<br>
+			   妳追尋著，那飄渺般的存在</p>
+          </div>
+          <div class="right">
+            <p>予龍饗的蒼虹少女阿<br>
+			   於皚皚的凍土之上<br>
+			   為何吾長眠於此，銳牙與利爪</p>
+			<p>還凜冽的蒼白之龍阿<br>
+			   於暴風與白雪之中<br>
+			   你守護著，那癡迷般的存在</p>
+          </div>
+        </div>
+		<div class="footer">
+          <p>"為何不能共舞呢，暴風與白雪之中的—"</p>
+        </div>
+		<div class="columns">
+          <div class="left">
+            <p>余親眼所見，那嚮往之地</p>
+          </div>
+          <div class="right">
+            <p>吾展翅翱翔，赴往昔之地</p>
+          </div>
+        </div>
+		<div class="footer">
+          <p>"當然，與之相隨<br>
+			 輪舞於雪與血的星辰恍惚間"</p>
+        </div>
+      `;
+    }
+  });
+</script>
+
 </body>
 </html>
-
