@@ -211,7 +211,7 @@
   	document.body.style.background = `url("${bgUrl}") center/cover fixed no-repeat`;
 	// Detect mobile screen size and adjust
 	if (window.innerWidth <= 768) {
-	  document.body.style.backgroundSize = 'contain';
+	  document.body.style.backgroundSize = 'auto 100%';
 	}
   let mask = ['-','-','-','-','-'];
 
@@ -278,4 +278,5 @@
 
 </body>
 </html>
+
 
