@@ -20,7 +20,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 40px 20px;
+    padding: 10px 20px;
     box-sizing: border-box;
   }
 
@@ -36,7 +36,7 @@
   }
 
   .card h1 {
-    font-size: 24px;
+    font-size: clamp(18px, 2vw, 24px);
     margin-top: 0;
     text-align: center;
   }
@@ -48,33 +48,33 @@
   }
 
   /* --- 主要內容分欄 --- */
-  .columns {
-    display: flex;
-    gap: 40px;
-    opacity: 1;
-    font-size: 16px;
-  }
+	.columns {
+	  display: flex;
+	  justify-content: space-between; /* 左右貼邊 */
+	  align-items: flex-betweenS;
+	  gap: 5px; /* 中間間距，可調 */
+	  font-size: clamp(10px, 2vw, 16px); /* 自動縮放字體：最小14px，最大18px，中間依螢幕寬度 */
+	  line-height: 1.6;
+	}
 
-  .left, .right {
-    flex: 1;
-    text-align: justify;
-  }
+	.left, .right {
+	  flex: 1;
+	  max-width: 45%;
+	}
 
-  .left p, .right p {
-    line-height: 1.6;
-    opacity: 1;
-  }
+	.left {
+	  text-align: left;
+	}
 
-  .right {
-    text-align: right;
-    align-self: flex-start;
-  }
-
+	.right {
+	  text-align: right;
+	}
+	
   /* --- 底部區域 --- */
   .footer {
     margin-top: 20px;
     text-align: center;
-    font-size: 14px;
+    font-size: clamp(8px, 2vw, 14px);
     opacity: 0.8;
   }
 
@@ -91,13 +91,6 @@
     opacity: 0;
     position: absolute;
     pointer-events: none;
-  }
-
-  /* --- 響應式 --- */
-  @media (max-width: 768px) {
-    .columns {
-      flex-direction: column;
-    }
   }
 </style>
 </head>
