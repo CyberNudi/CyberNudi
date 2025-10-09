@@ -219,76 +219,65 @@
   let mask = ['-','-','-','-','-'];
 
   document.body.addEventListener("click", () => {
-    input.focus(); // 讓輸入框聚焦
-    display.style.color = "#00c4cc"; // 改顯示文字顏色
+    input.focus();
+    display.style.color = "#00c4cc";
   });
 
-  input.addEventListener("input", () => {
+  // ======= 把下面值換成 A 步驟產生的結果 =======
+  const encryptedContentB64 = "BwQlqmL93D37BXxRHmkq14oogx0kbOwX1P3uUkl1NrsSXnwtuoODcKTIBCDYC6ObpAV5/JtRhaCJjeGMQnNJlexFUGyJD08ipVWci8oPK9AFYlbwslQKvqQzkDp9HjKOCQhpiAt3YEoPXHy4SqB53mCGqKDm518GvK9BqHJf6ksE4NY/bCHIK8dWV1KqDEd6O+OMltD0Y1gwh4egyBIFltyS1u8s53bBenhy9ReNkG8oabjLOU86AqIz/UIu2HN94PqLp+i+wxHeRQ02ZJwlfZWUrhOKjTYNAKJPQ9oUwpnKCnSH/cwzn/ar6fonLl1yZ9sXIwHhIAUtF11zvtc7beg0TfS1CoRyIojAwTzjx9UtVokDx/VZilyBIxWBj4ycAE9JzrUZeM5Fsm3xSoK6XcTIehNkqN0gOZYZC8Z69ZZFdPgfk1ryqatk9BGF2PEuFhEwtUKCOz/RPGIsMc9RSIU7NAg33xJMFt6m6A+jjVl2KFqJ4FyOsmyxMG9dEZcSvOPhlgXxj73eYUNcfpLGYSEgEHxBH5wnOABAM6p4TqaJQaMfk3WESGVD6ssnbV6B1L9uTunB4fAac11st1U236xEFaF01oxbtvS9r3WD9MxqpexdGd471TffGkn9R4eYIvn/OBt/L79rrZBOwHzcY+xU1xeFceI8BWhoTpH5win79qCjbKQIs92PHBqaclBmHaBIFxwhbs5JGEnReQ1PT0HMmSLJJO1tDXIniSWWTKMpyVZ3B0OU7oNUppSL+ChCdyJQNG16XXO+WVMpMkFsLyTFA2x3vgG2JYwUH/W5dj5CyuqaItjwa+ZRa+ZaEnqHzdhbvzM75LJrENJLfPn9Rn4iO1xrfXjWpcO7bz6u59ybcU4SYNxBFga2H1VWcThjVNYzTpok26hinEe/G75aUPZWkIojBdlquVw8DqjZPLUuzCPyio4WoRBf6klZlIlvLR88QGwqWatOLOEFbPQlH7lSWQbAOgSLC6KItBZmEGL2MoaMqes/iaWwiz4wObYw43QPoNnGWlAVJ3Hvxij7SkCg2os/lmJAbn4B7Q1OflqqCF0AUi0a1ExrxHKIHAsx/IRvaAUMiNyKf7geLbJXhs3UUj2/bPu4riAXtfpv2NrUUw+OTxACKtvS3KUZPBEnDuADepUb4jRtfwKWPdjpHsHaqMr0yE1VInfYs+JmndUNMaCCvriKkZdocSV4JA/OHczCQiEqMmwQ2ullIOnYT3DLVxxpm+IYh/PORfSOAoo6Ei/IWBAxAOWlH7AU03Q85FJyx9UW5Hr21AePf6hbflFHcun/amE9ybd20kJCbppbxGuby5Dj3AVYIOjoFLBRVzHbofmn5MXnjt+ct3IhfiXafAMtlbNtYr79rhJvsRsaSDWqesGOynQsn33QA43I7GDqbak3AJKy6VHPyUTmJQgHoQrA0Q0yBJy5v5PqOOAQK3o90lN9qt7D44/zdOyW/iVkkxb5rnH2tlvO+DsVQTs6NEosziFPuGmLh0BiPIHdVCUMNw1Zaow7c4coxOqMDqYlgYGda4R89UnQa1zWMxuWKY0LaBRZoucXP7cW1gThpN1h4vHWYKrID6XtlK3Hh7bpZrrW1V7hMfnpdzSraXwjVO8xSke8zT++DSlrs8s0vCjWfel/MoxQwg==";
+  const ivB64 = "NXR2NaygZapnlZwk";
+  const saltB64 = "L2qS0KwrqUdcL5+sAhlvRQ==";
+  const pbkdf2Iterations = 200000; // 需與 A 步驟一致
+  // ============================================
+
+  function b64ToBuf(b64){ return Uint8Array.from(atob(b64), c => c.charCodeAt(0)); }
+  function bufToStr(buf){ return new TextDecoder().decode(buf); }
+
+  async function deriveKeyFromPassword(password, saltB64, iterations=200000){
+    const salt = b64ToBuf(saltB64);
+    const pwKey = await crypto.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveKey']);
+    return crypto.subtle.deriveKey(
+      { name: 'PBKDF2', salt: salt, iterations: iterations, hash: 'SHA-256' },
+      pwKey,
+      { name: 'AES-GCM', length: 256 },
+      false,
+      ['decrypt']
+    );
+  }
+
+  async function decryptWithPassword(password){
+    try {
+      const key = await deriveKeyFromPassword(password, saltB64, pbkdf2Iterations);
+      const iv = b64ToBuf(ivB64);
+      const ct = b64ToBuf(encryptedContentB64);
+      const plainBuf = await crypto.subtle.decrypt({ name:'AES-GCM', iv: iv }, key, ct);
+      return bufToStr(plainBuf);
+    } catch(e) {
+      // 若解密失敗（多半是密碼錯誤或數據被竄改），回傳 null
+      return null;
+    }
+  }
+
+  // 監聽輸入（改為 async）
+  input.addEventListener("input", async () => {
     const val = input.value.replace(/[^a-zA-Z0-9]/g, '');
     mask = ['-','-','-','-','-'];
-    for(let i=0; i<val.length; i++){
-      mask[i] = '•';
-    }
+    for(let i=0;i<val.length;i++) mask[i] = '•';
     display.innerHTML = "&lt;" + mask.join('') + "&gt;";
 
-    if (val.trim() === "13102") {
+    // 嘗試用輸入密碼解密（在你想要的條件下也可改成只有當長度到達 5 才嘗試）
+    const plaintext = await decryptWithPassword(val.trim());
+    if (plaintext !== null) {
+      // 解密成功：把明文（可包含 HTML）填回 .card
       document.body.style.background = 'url("https://github.com/CyberNudi/AI_Gen/blob/main/%CE%BE.jpg?raw=true") center/cover fixed no-repeat';
-      document.querySelector(".card").innerHTML = `
-        <h1>ξ</h1>
-        <hr>
-        <div class="columns">
-          <div class="left">
-            <p>余初次感受到<br>
-			   那親密的蒼白身影<br>
-			   儘管鮮血肆意流淌</p>
-          </div>
-          <div class="right">
-            <p>吾初次感受到<br>
-			   那溫熱的晰虹身軀<br>
-			   儘管雙目已然失明</p>
-          </div>
-        </div>
-        <div class="footer">
-          <p>"永恆的鬥爭<br>
-			 屍骸堆壘，血液漫漶"</p>
-        </div>
-		<div class="columns">
-          <div class="left">
-            <p>予凜冽的蒼白之龍阿<br>
-			   於皚皚的凍土之上<br>
-			   為何余堅定不移，血鐮與晶蝕</p>
-			<p>還龍饗的蒼虹少女阿<br>
-			   於暴風與白雪之中<br>
-			   妳追尋著，那飄渺般的存在</p>
-          </div>
-          <div class="right">
-            <p>予龍饗的蒼虹少女阿<br>
-			   於皚皚的凍土之上<br>
-			   為何吾長眠於此，銳牙與利爪</p>
-			<p>還凜冽的蒼白之龍阿<br>
-			   於暴風與白雪之中<br>
-			   你守護著，那癡迷般的存在</p>
-          </div>
-        </div>
-		<div class="footer">
-          <p>"為何不能共舞呢，暴風與白雪之中的—"</p>
-        </div>
-		<div class="columns">
-          <div class="left">
-            <p>余親眼所見，那嚮往之地</p>
-          </div>
-          <div class="right">
-            <p>吾展翅翱翔，赴往昔之地</p>
-          </div>
-        </div>
-		<div class="footer">
-          <p>"當然，與之相隨<br>
-			 輪舞於雪與血的星辰恍惚間"</p>
-        </div>
-      `;
+      document.querySelector(".card").innerHTML = plaintext;
+    } else {
+      // 解密失敗：你可以選擇不做任何事或做小提示（盡量不要提示為何失敗以免協助暴力破解）
     }
   });
 </script>
+
+
 
 </body>
 </html>
