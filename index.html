@@ -208,7 +208,11 @@
   const input = document.getElementById("codeInput");
   const display = document.getElementById("display");
   let bgUrl = "https://github.com/CyberNudi/AI_Gen/blob/fff87441740e737ff7c76fd91c0725e6cf8f815f/%CE%B1.jpg?raw=true";
-  document.body.style.background = `url("${bgUrl}") center/cover fixed no-repeat`;
+  	document.body.style.background = `url("${bgUrl}") center/cover fixed no-repeat`;
+	// Detect mobile screen size and adjust
+	if (window.innerWidth <= 768) {
+	  document.body.style.backgroundSize = 'contain';
+	}
   let mask = ['-','-','-','-','-'];
 
   document.body.addEventListener("click", () => {
@@ -274,3 +278,4 @@
 
 </body>
 </html>
+
